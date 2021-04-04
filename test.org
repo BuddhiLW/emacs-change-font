@@ -36,6 +36,7 @@ We get a file already showing us all this Hellos in a gazzilion of languages, in
 #+ATTR_ORG: :width 800
 [[file:images/hello-greek.png]]
 
+
 ** Download Gentium font
 https://software.sil.org/gentium/download/
 
@@ -59,8 +60,9 @@ One font which support greek is Gentium Plus.
  #+end_src
 
 #+RESULTS:
+| (lambda nil (set-frame-font Gentium Plus t)) | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | efs/org-mode-visual-fill | org-bullets-mode | efs/org-mode-setup | (lambda nil (display-line-numbers-mode 0)) |
 
-** Alternative way to setup font in buffer
+*** Alternative way to define fonts
 #+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
   ;; Use variable width font faces in current buffer
    (defun my-buffer-face-mode-variable ()
@@ -83,8 +85,7 @@ One font which support greek is Gentium Plus.
 
  #+RESULTS:
 
-** Yet another way
- 
+*** Using set-face 
 #+begin_src emacs-lisp
   (set-face-attribute 'default t :font "Gentium Plus" :height efs/default-font-size)
 #+end_src
