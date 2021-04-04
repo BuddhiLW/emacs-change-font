@@ -100,3 +100,51 @@ If FRAME is nil, set the attributes for all existing frames, as
 well as the default for new frames.  If FRAME is t, change the
 default for new frames only.
 #+end_quote
+
+* Changing  prefer-coding-system
+
+#+begin_src emacs-lisp
+  (prefer-coding-system 'greek-iso-8bit)
+  (prefer-coding-system 'utf-8)
+  ;; (load "/path/to/the/file/greek.elc")
+  (setq default-input-method "el_GR")
+#+end_src
+
+#+RESULTS:
+: el_GR
+
+** Fast Input methods
+
+Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to-alternate-two-input-methods-in-emacs][Input Method Alternation]].
+#+begin_src emacs-lisp
+  ;; Input method and key binding configuration.
+  (setq alternative-input-methods
+        '(("chinese-tonepy" . [?\ó])
+          ("chinese-sisheng"   . [?\¶]))) 
+
+  (setq default-input-method
+        (caar alternative-input-methods))
+
+  (defun toggle-alternative-input-method (method &optional arg interactive)
+    (if arg
+        (toggle-input-method arg interactive)
+      (let ((previous-input-method current-input-method))
+        (when current-input-method
+          (deactivate-input-method))
+        (unless (and previous-input-method
+                     (string= previous-input-method method))
+          (activate-input-method method)))))
+
+  (defun reload-alternative-input-methods ()
+    (dolist (config alternative-input-methods)
+      (let ((method (car config)))
+        (global-set-key (cdr config)
+                        `(lambda (&optional arg interactive)
+                           ,(concat "Behaves similar to `toggle-input-method', but uses \""
+                                    method "\" instead of `default-input-method'")
+                           (interactive "P\np")
+                           (toggle-alternative-input-method ,method arg interactive))))))
+
+  (reload-alternative-input-methods)
+#+end_src
+
